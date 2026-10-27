@@ -102,12 +102,13 @@ body {
   align-items: center;
   justify-content: center;
   box-shadow: var(--gold-glow);
+  overflow: hidden;
 }
 
 .brand-icon img {
-  width: 32px;
-  height: 32px;
-  object-fit: contain;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .brand-text {
