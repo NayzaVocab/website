@@ -80,7 +80,7 @@ python -m http.server 8000
 
 ## 🔱 Muallif (Author)
 
-**Ismoil** ([@ismaaiiyl](https://github.com/ismaaiiyl))  
+**Ismoil G'aynazarov** ([@ismaaiiyl](https://github.com/ismaaiiyl))  
 *Creator of Nayza Vocab Platform* 🔱  
 - Tashkilot: [Nayza Vocab Organization](https://github.com/NayzaVocab)  
 - Android Repo: [NayzaVocab/android](https://github.com/NayzaVocab/android)  
