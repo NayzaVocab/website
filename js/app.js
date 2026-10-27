@@ -93,12 +93,35 @@ async function fetchLatestRelease() {
 function initMockupTabs() {
   const tabs = document.querySelectorAll('.mockup-tab-btn');
   const screenImg = document.getElementById('mockup-screen-img');
+  const captionEl = document.getElementById('mockup-screen-desc');
   if (!tabs.length || !screenImg) return;
 
   const screens = {
-    dashboard: 'assets/screenshots/dashboard.png',
-    library: 'assets/screenshots/library.png',
-    installer: 'assets/screenshots/installer.png',
+    dashboard: {
+      src: 'assets/screenshots/dashboard.png',
+      alt: 'Nayza Vocab Bosh sahifa',
+      desc: '📊 <strong>Bosh sahifa:</strong> Kunlik statistika, takrorlash navbati va Spaced Repetition mashqlari.'
+    },
+    library: {
+      src: 'assets/screenshots/library.png',
+      alt: "Nayza Vocab Lug'atlar to'plami",
+      desc: "📚 <strong>Lug'atlar:</strong> Shaxsiy lug'at to'plamlari, xotira darajalari va joriy kolleksiyalar ro'yxati."
+    },
+    'cloud-library': {
+      src: 'assets/screenshots/cloud-library.png',
+      alt: 'Nayza Vocab Cloud Kutubxona',
+      desc: '☁️ <strong>Cloud Kutubxona:</strong> Minglab darsliklarni qidirish va tayyor kitoblarni bir zumda yuklab olish.'
+    },
+    settings: {
+      src: 'assets/screenshots/settings.png',
+      alt: 'Nayza Vocab Sozlamalar',
+      desc: '⚙️ <strong>Sozlamalar:</strong> Audio talaffuz tezligi, 6 xil til, bildirishnomalar va Offline Import/Export.'
+    },
+    installer: {
+      src: 'assets/screenshots/installer.png',
+      alt: "Nayza Vocab Xavfsiz O'rnatish",
+      desc: "🛡️ <strong>Xavfsiz O'rnatish:</strong> Ilova ichidan to'g'ridan-to'g'ri yangilanish va VirusTotal orqali 100% zararsiz tekshiruv."
+    }
   };
 
   tabs.forEach(tab => {
@@ -107,11 +130,20 @@ function initMockupTabs() {
       tab.classList.add('active');
 
       const target = tab.dataset.screen;
-      if (screens[target]) {
+      const data = screens[target];
+      if (data) {
         screenImg.style.opacity = '0';
+        if (captionEl) captionEl.style.opacity = '0';
+
         setTimeout(() => {
-          screenImg.src = screens[target];
+          screenImg.src = data.src;
+          screenImg.alt = data.alt;
           screenImg.style.opacity = '1';
+
+          if (captionEl) {
+            captionEl.innerHTML = data.desc;
+            captionEl.style.opacity = '1';
+          }
         }, 150);
       }
     });
@@ -145,7 +177,7 @@ function initFaqAccordion() {
 }
 
 /**
- * Mobile Navigation Drawer Toggle
+ * Mobile Navigation Drawer Toggle & Auto-Close
  */
 function initMobileMenu() {
   const toggleBtn = document.querySelector('.menu-toggle');
@@ -153,19 +185,19 @@ function initMobileMenu() {
   if (!toggleBtn || !navMenu) return;
 
   toggleBtn.addEventListener('click', () => {
-    const isVisible = navMenu.style.display === 'flex';
-    if (isVisible) {
-      navMenu.style.display = '';
-    } else {
-      navMenu.style.display = 'flex';
-      navMenu.style.flexDirection = 'column';
-      navMenu.style.position = 'absolute';
-      navMenu.style.top = '80px';
-      navMenu.style.left = '0';
-      navMenu.style.width = '100%';
-      navMenu.style.background = 'rgba(7, 11, 20, 0.98)';
-      navMenu.style.padding = '24px';
-      navMenu.style.borderBottom = '1px solid rgba(255, 200, 55, 0.15)';
-    }
+    const isOpen = navMenu.classList.toggle('open');
+    toggleBtn.textContent = isOpen ? '✕' : '☰';
+    toggleBtn.setAttribute('aria-expanded', isOpen);
+  });
+
+  // Auto-close menu when clicking any nav link
+  const navLinks = navMenu.querySelectorAll('.nav-link');
+  navLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      navMenu.classList.remove('open');
+      toggleBtn.textContent = '☰';
+      toggleBtn.setAttribute('aria-expanded', 'false');
+    });
   });
 }
+
